@@ -1,7 +1,16 @@
 package com.emptils.controller;
 
-/**
- * Created by Administrator on 2017/1/4.
- */
+import com.google.gson.Gson;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping
+
 public class mainController {
+
+    public void test() {
+        Gson gson = new Gson();
+        gson.
+    }
 }
