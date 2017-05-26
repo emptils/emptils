@@ -1,16 +1,17 @@
 package com.emptils.controller;
 
-import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping
 
 public class mainController {
 
-    public void test() {
-        Gson gson = new Gson();
-        gson.
+    @ResponseBody
+    @RequestMapping(value = "/test")
+    public String test() {
+        return "dddddddddddddddd";
     }
 }
