@@ -9,5 +9,19 @@
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
     <context:component-scan base-package="com.emptils.controller" />
     <bean id="loadReSource" class="com.emptils.controller.MainController" init-method="run"></bean>
-
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 核心线程数  -->
+        <property name="corePoolSize" value="2" />
+        <!-- 最大线程数 -->
+        <property name="maxPoolSize" value="3" />
+        <!-- 队列最大长度 >=mainExecutor.maxSize -->
+        <property name="queueCapacity" value="10" />
+        <!-- 线程池维护线程所允许的空闲时间 -->
+        <property name="keepAliveSeconds" value="300" />
+        <!-- 线程池对拒绝任务(无线程可用)的处理
+        策略 --> <!-- 若不作该处理，当线程满了，队列满了之后，继续往下增加任务，则抛出异常，拒绝该任务 -->
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
 </beans>
