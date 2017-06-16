@@ -1,6 +1,6 @@
 package com.emptils.util;
 
-
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -17,17 +17,21 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/6/2.
+ * Created by Administrator on 2017/6/5.
+ * 保存COOKIE
  */
 @Component
-public class HttpUtil {
-
+public class HttpClient {
+    private String cookieHeader = null;
     @Autowired
     private HttpManager hm;
     public String post(List<NameValuePair> valuePairs , String url) {
         CloseableHttpClient httpclient = hm.getHttpClient();
         // 创建httppost
         HttpPost httppost = new HttpPost(url);
+        if(cookieHeader!=null) {
+            httppost.setHeader("Cookie","JSESSIONID="+cookieHeader);
+        }
         // 创建参数队列
         UrlEncodedFormEntity uefEntity;
         try {
@@ -36,11 +40,11 @@ public class HttpUtil {
             System.out.println("executing request " + httppost.getURI());
             CloseableHttpResponse response = httpclient.execute(httppost);
             try {
+                Header header = response.getFirstHeader("Set-Cookie");
+                cookieHeader = header == null?null:header.getValue();
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    System.out.println("--------------------------------------");
-                    System.out.println("Response content: " + EntityUtils.toString(entity, "UTF-8"));
-                    System.out.println("--------------------------------------");
+                    return EntityUtils.toString(entity);
                 }
             } finally {
                 response.close();
@@ -61,4 +65,5 @@ public class HttpUtil {
         }
         return null;
     }
+
 }

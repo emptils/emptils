@@ -1,14 +1,20 @@
 package com.emptils.task;
 
-import java.util.concurrent.Callable;
+import com.emptils.util.HttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/6/2.
  */
-public class TestTask implements Callable {
+@Component
+public class TestTask implements Runnable {
+
+    @Autowired
+    private HttpClient httpClient;
 
     @Override
-    public Object call() throws Exception {
+    public void run() {
 
     }
 }

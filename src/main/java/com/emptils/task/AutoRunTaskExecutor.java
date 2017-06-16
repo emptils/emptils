@@ -9,11 +9,16 @@ import org.springframework.core.task.TaskExecutor;
  * Created by Administrator on 2017/6/2.
  */
 public class AutoRunTaskExecutor implements ApplicationListener<ContextRefreshedEvent> {
+
     @Autowired
     private TaskExecutor taskExecutor;
+    @Autowired
+    private TestTask tt;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-
+        if(event.getApplicationContext().getDisplayName().equals("Root WebApplicationContext")) {
+            taskExecutor.execute(tt);
+        }
     }
 }
